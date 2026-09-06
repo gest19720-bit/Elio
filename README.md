@@ -25,8 +25,8 @@ python3 -m http.server 8000
 
 1. Create a free project at [supabase.com](https://supabase.com).
 2. In **Project Settings → API**, copy your **Project URL** and **anon public key**.
-3. Open `js/supabase.js` and replace `YOUR_SUPABASE_URL` and `YOUR_SUPABASE_ANON_KEY`.
-4. In the Supabase SQL editor, run the table + Row Level Security setup found in the comment block at the bottom of `js/supabase.js`. It creates a `waitlist_users` table and a policy that only allows public **inserts** (not reads), so waitlist data stays private.
+3. Open `js/supabase.js` and replace `YOUR_SUPABASE_URL` and `YOUR_SUPABASE_ANON_KEY` with the Project URL and anon public key for the Elio project. Never use the service_role key in browser code.
+4. In **Supabase Dashboard → SQL Editor**, run the complete file `supabase/migrations/001_waitlist.sql`. It creates a private `waitlist_users` table and an anonymous `join_waitlist` RPC. The RPC validates input, rejects duplicate emails, generates referral codes, and credits valid referrers atomically.
 
 Until Supabase is configured, the waitlist form still works end-to-end for testing — submissions are logged to the browser console and the user is still taken to the success page with a working referral code.
 
