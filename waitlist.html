@@ -464,7 +464,30 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // Keep this page functional when only waitlist.html is uploaded.
+    // This is the public anon key, never a service_role key.
+    window.__ELIO_SUPABASE_CONFIG = {
+      url: 'https://rdwiokoapwzybgndwodg.supabase.co',
+      anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkd2lva29hcHd6eWJnbmR3b2RnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2OTA4MzAsImV4cCI6MjEwNDI2NjgzMH0.WfG6oxN5Q7FotzWhgETenrDeANpKnjUTw4MrRYgVVfA'
+    };
+  </script>
   <script src="js/supabase.js"></script>
+  <script>
+    // Fallback for hosts that deploy only this HTML file and omit sibling assets.
+    if (!window.getElioClient && window.supabase && window.__ELIO_SUPABASE_CONFIG) {
+      window.getElioClient = function () {
+        if (!window.__elioSupabaseClient) {
+          window.__elioSupabaseClient = window.supabase.createClient(
+            window.__ELIO_SUPABASE_CONFIG.url,
+            window.__ELIO_SUPABASE_CONFIG.anonKey,
+            { auth: { persistSession: false, autoRefreshToken: false } }
+          );
+        }
+        return window.__elioSupabaseClient;
+      };
+    }
+  </script>
   <script src="js/referral.js"></script>
   <script>
     // ---- Mobile nav toggle (matches index.html) ----
